@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml">
+
+        <ui:define name="corpo">
+            <h:form id="form">
+                <h1>Contas à Pagar</h1>
+
+                <p:toolbar style="margin-top: 20px">
+                    <p:toolbarGroup>
+                        <p:commandButton action="/Home.xhtml" value="Inicio" ajax="false"
+                                         icon="ui-icon-arrowrefresh-1-w"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <p:messages  closable="true" severity="fatal,error" id="msgs" />
+
+                <p:tabView dynamic="true" cache="true">
+                    <p:tab title="Contas a Pagar">
+                        <p:dataTable  id="tabContasPagar"  value="#{contasPagarControle.listaContasPagar}" var="pagar"  rows="15" paginator="true"
+                                      paginatorAlwaysVisible="false" 
+                                      style="text-align: center"   emptyMessage="Nenhuma Conta à Pagar encontrado.">
+
+
+
+                            <p:column headerText="Id">
+                                <h:outputText value="#{pagar.compra.id}" />
+                            </p:column>
+                            <p:column headerText="Data de Lançamento">
+                                <h:outputText value="#{pagar.compra.dataCriacao}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Cliente">
+                                <h:outputText value="#{pagar.compra.pessoa.nome}"/>
+                            </p:column>
+                            <p:column headerText="Data Vencimento">
+                                <h:outputText value="#{pagar.dataVencimento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Valor Total">
+                                <h:outputText value="#{pagar.valor}"/>
+                            </p:column>
+
+
+                            <p:column headerText="Opções" style="text-align: center">
+                                <p:commandButton action="cadastro?faces-redirect=true" ajax="false"  icon="ui-icon-check" value="Pagar"
+                                                 actionListener="#{contasPagarControle.setContasPagar(pagar)}"/>
+
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:tab>
+
+                    <p:tab title="Contas Recebidas">
+                        <p:dataTable  id="tabContasRecidas"  value="#{contasPagarControle.listaContasRecebidas}" var="recebidas"  rows="15" paginator="true"
+                                      paginatorAlwaysVisible="false" 
+                                      style="text-align: center"  lazy="true" emptyMessage="Nenhuma Conta à Recebidas encontrado.">
+
+
+
+                            <p:column headerText="Id">
+                                <h:outputText value="#{recebidas.compra.id}" />
+                            </p:column>
+                            <p:column headerText="Data de Lançamento">
+                                <h:outputText value="#{recebidas.compra.dataCriacao}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Cliente">
+                                <h:outputText value="#{recebidas.compra.pessoa.nome}"/>
+                            </p:column>
+                            <p:column headerText="Data Vencimento">
+                                <h:outputText value="#{recebidas.dataVencimento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Valor Total">
+                                <h:outputText value="#{recebidas.valor}"/>
+                            </p:column>
+                            <p:column headerText="Valor Recebido">
+                                <h:outputText value="#{recebidas.valorPagamento}"/>
+                            </p:column>
+                            <p:column headerText="Data Pagamento">
+                                <h:outputText value="#{recebidas.dataPagamento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+
+                            <p:column headerText="Opções" style="text-align: center">
+                                <p:commandButton  icon="ui-icon-search"  update="tabela"  oncomplete="PF('info').show()">
+                                    <f:setPropertyActionListener value="#{recebidas}" target="#{contasPagarControle.contasPagar}"/>
+                                    <p:dialog  header="Informações de contas Pagas" resizable="false" modal="true"   widgetVar="info" width="500px" height="500px">
+                                        <p:outputPanel id="tabela" layout="grid">
+                                            <p:panelGrid columns="2" rendered="#{not empty contasReceberControle.contasReceber}" columnClasses="label,value" >
+                                                <p:outputLabel value="Código:"/>                                       
+                                                <h:outputText value="#{contasPagarControle.contasPagar.id}"/>
+                                                <p:outputLabel value="Nome:"/>                                       
+                                                <h:outputText value="#{contasPagarControle.contasPagar.compra.pessoa.nome}"/>
+                                                <p:outputLabel value="Data de Lançamento:"/>                                       
+                                                <h:outputText value="#{contasPagarControle.contasPagar.compra.dataCriacao}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                                <p:outputLabel value="Data Vencimento:"/>                                       
+                                                <h:outputText value="#{contasPagarControle.contasPagar.dataVencimento}"> 
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                                <p:outputLabel value="Valor Total:"/>                                       
+                                                <h:outputText value="#{contasPagarControle.contasPagar.valor}"/>
+                                                <p:outputLabel value="Valor Recebido"/>                                       
+                                                <h:outputText value="#{contasPagarControle.contasPagar.valorPagamento}"/>
+                                                <p:outputLabel value="Data Pagamento:"/>                                       
+                                                <h:outputText value="#{contasPagarControle.contasPagar.dataPagamento}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                                <p:outputLabel value="Pagamento Efetuado:"/>                                       
+                                                <h:outputText value="#{contasPagarControle.contasPagar.ativo?'Sim':'Não'}"/>
+                                            </p:panelGrid> 
+                                        </p:outputPanel>
+
+                                    </p:dialog>
+                                </p:commandButton>
+
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:tab>
+                </p:tabView>
+
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="itemvendasPorPeriodo" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4236134c-4ba9-4ed0-aa9a-ccbc57156bb9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idvenda" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     itempedido."item_id" AS itempedido_item_id,
+     itempedido."item_quantidade" AS itempedido_item_quantidade,
+     produto."produto_nome" AS produto_produto_nome,
+     produto."produto_valor" AS produto_produto_valor,
+     itempedido."pedido_id" AS itempedido_pedido_id
+FROM
+     "public"."produto" produto INNER JOIN "public"."itempedido" itempedido ON produto."produto_id" = itempedido."prod_id"
+where
+itempedido."pedido_id" = $P{idvenda}]]>
+	</queryString>
+	<field name="itempedido_item_id" class="java.lang.Long"/>
+	<field name="itempedido_item_quantidade" class="java.math.BigDecimal"/>
+	<field name="produto_produto_nome" class="java.lang.String"/>
+	<field name="produto_produto_valor" class="java.math.BigDecimal"/>
+	<field name="itempedido_pedido_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="a8f656f3-4ab5-40fd-8985-f92faacda2fb"/>
+				<textFieldExpression><![CDATA[$F{itempedido_item_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="176" height="20" uuid="f271026d-cf9c-4f5c-b700-74d5907b02bb"/>
+				<textFieldExpression><![CDATA[$F{produto_produto_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="148" height="20" uuid="916abe21-289b-4c6c-921a-4711be093155"/>
+				<textFieldExpression><![CDATA[$F{itempedido_item_quantidade}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="424" y="0" width="131" height="20" uuid="c7d84826-7dfc-49ea-8f16-a325e1de871d"/>
+				<textFieldExpression><![CDATA[$F{produto_produto_valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

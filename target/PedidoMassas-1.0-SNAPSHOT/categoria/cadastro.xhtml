@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml">
+        <ui:define name="titulo">#{categoriaControle.editando ? 'Edição de Categoria' : 'Nova Categoria'}</ui:define>
+        <ui:define name="corpo">
+
+            <h:form>
+                <h1>#{categoriaControle.editando ? 'Edição de Categoria' : 'Nova Categoria'}</h1>
+
+                <p:toolbar style="margin-top: 20px">
+                    <p:toolbarGroup>
+                        <p:button value="Cancelar" outcome="/categoria/pesquisa"  icon="ui-icon-close"/>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Salvar"  action="#{categoriaControle.salvar()}"
+                                         id="btsalvar" icon="ui-icon-disk" ajax="false"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+                <p:panelGrid columns="2" id="painelCidade" style="width: 100%; margin-top: 20px">
+
+                    <p:outputLabel for="id" value="ID:"/>
+                    <p:inputText id="id"  value="#{categoriaControle.categoria.id}"
+                                 size="20" maxlength="20" disabled="true"/>
+
+                    <p:outputLabel for="nome" value="Nome:"/>
+                    <p:inputText id="nome"  size="80" maxlength="80" value="#{categoriaControle.categoria.nome}"
+                                 required="true" requiredMessage="O campo nome da Cidade é obrigatório"/>
+
+                    <p:outputLabel for="ativo" value="Ativo:"/>
+                    <p:selectBooleanCheckbox id="ativo" value="#{categoriaControle.categoria.ativo}"/>
+
+                    <p:outputLabel for="categoriaPai" value="Categoria Pai:"/>
+                    <p:autoComplete id="categoriaPai" 
+                                    value="#{categoriaControle.categoria.categoriaPai}"
+                                    completeMethod="#{categoriaControle.autoComplete}"
+                                    var="cat"
+                                    itemLabel="#{cat.nome}"
+                                    itemValue="#{cat}"
+                                    converter="#{categoriaControle.converter()}"
+                                    queryDelay="500"
+                                    dropdown="true"
+                                    style="margin-right: 30px;"/>
+
+                </p:panelGrid>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+</html>
+

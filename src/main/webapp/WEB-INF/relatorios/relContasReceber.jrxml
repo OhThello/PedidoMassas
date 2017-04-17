@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relContasReceber" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="505817f4-e640-41cc-bf75-65a3a7fc3073">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="dataInicio" class="java.util.Date"/>
+	<parameter name="dataFim" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     contasreceber."receber_id" AS contasreceber_receber_id,
+     contasreceber."receber_datalancamento" AS contasreceber_receber_datalancamento,
+     contasreceber."receber_datapagamento" AS contasreceber_receber_datapagamento,
+     contasreceber."receber_datavencimento" AS contasreceber_receber_datavencimento,
+     contasreceber."receber_valor" AS contasreceber_receber_valor,
+     contasreceber."receber_valorpagamento" AS contasreceber_receber_valorpagamento,
+     contasreceber."pedido_id" AS contasreceber_pedido_id,
+     pedido."pedido_id" AS pedido_pedido_id,
+     pedido."pes_id" AS pedido_pes_id,
+     pessoa."pes_id" AS pessoa_pes_id,
+     pessoa."pes_nome" AS pessoa_pes_nome
+FROM
+     "public"."pedido" pedido INNER JOIN "public"."contasreceber" contasreceber ON pedido."pedido_id" = contasreceber."pedido_id"
+     INNER JOIN "public"."pessoa" pessoa ON pedido."pes_id" = pessoa."pes_id"
+where
+(contasreceber."receber_valor" -  contasreceber."receber_valorpagamento") > 0 and
+cast(contasreceber."receber_datavencimento" as Date) between $P{dataInicio} and $P{dataFim}]]>
+	</queryString>
+	<field name="contasreceber_receber_id" class="java.lang.Long"/>
+	<field name="contasreceber_receber_datalancamento" class="java.sql.Date"/>
+	<field name="contasreceber_receber_datapagamento" class="java.sql.Date"/>
+	<field name="contasreceber_receber_datavencimento" class="java.sql.Date"/>
+	<field name="contasreceber_receber_valor" class="java.math.BigDecimal"/>
+	<field name="contasreceber_receber_valorpagamento" class="java.math.BigDecimal"/>
+	<field name="contasreceber_pedido_id" class="java.lang.Long"/>
+	<field name="pedido_pedido_id" class="java.lang.Long"/>
+	<field name="pedido_pes_id" class="java.lang.Long"/>
+	<field name="pessoa_pes_id" class="java.lang.Long"/>
+	<field name="pessoa_pes_nome" class="java.lang.String"/>
+	<variable name="soma" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{contasreceber_receber_valor}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="555" height="33" uuid="78dc3e95-7ce6-4611-beed-1a86ea36ea04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Relatório de Contas Receber]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="341" y="48" width="214" height="22" uuid="1e031fb6-22d9-486c-af79-49cfbd9c8230"/>
+				<text><![CDATA[Massas Máximo & Zortea]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="a76b685f-2510-4752-9241-15dab5dc268f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="86" height="15" uuid="0d869026-7b08-4a05-abd9-2e822bc561e9"/>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="300" y="19" width="133" height="15" uuid="0540b804-a36a-4e28-9d08-61b59b425272"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Data Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="433" y="19" width="122" height="15" uuid="350ab846-caeb-4be2-b3b6-9e082eef07d8"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="19" width="214" height="15" uuid="ec54a497-557d-4a15-9795-09fff784f0cf"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="8a4afd8c-c2c4-49e8-9dff-d80454d370fc"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="86" height="15" uuid="c69ccf93-c304-44ee-8e67-8b82f29b7ef9"/>
+				<textFieldExpression><![CDATA[$F{contasreceber_receber_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="Detail" x="300" y="0" width="133" height="15" uuid="04a9bfe9-be4d-4d39-a584-5ed4809c6827"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{contasreceber_receber_datavencimento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement style="Detail" x="433" y="0" width="122" height="15" uuid="a8895f97-17bb-43f0-ab5b-70805f039793"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{contasreceber_receber_valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="213" height="16" uuid="fb9b7f3e-f5d7-45d7-bc8e-7a9d4aaa73dd"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pessoa_pes_nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="e64cff16-fc78-4ade-81e0-b32da4961d68"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="7cfcd3b3-04a1-4007-ad2b-80b4979f2506"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="66f5baa7-8139-4fcb-a56a-6f7506d0841b"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="fe3c8732-0e69-4827-95e3-280be3667f31"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="60" splitType="Stretch">
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="433" y="40" width="120" height="20" forecolor="#000000" uuid="e97dd840-2499-4ffe-9b8e-3fbad88bd635"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{soma}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="197" y="40" width="236" height="20" forecolor="#000000" uuid="393a0160-5a9c-4f7f-a842-dddc095386e3"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total de contas a Receber:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

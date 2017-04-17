@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="compra_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0b81a83c-594a-4449-86a2-0bc3dbd323b8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idcompra" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     itemcompra."item_id" AS itemcompra_item_id,
+     itemcompra."item_quantidade" AS itemcompra_item_quantidade,
+     itemcompra."item_valorunitario" AS itemcompra_item_valorunitario,
+     produtocompra."prodcompra_nome" AS produtocompra_prodcompra_nome,
+     produtocompra."prodcompra_valor" AS produtocompra_prodcompra_valor,
+     itemcompra."compra_id" AS itemcompra_compra_id
+FROM
+     "public"."produtocompra" produtocompra INNER JOIN "public"."itemcompra" itemcompra ON produtocompra."prodcompra_id" = itemcompra."prodcompra_id"
+]]>
+	</queryString>
+	<field name="itemcompra_item_id" class="java.lang.Long"/>
+	<field name="itemcompra_item_quantidade" class="java.math.BigDecimal"/>
+	<field name="itemcompra_item_valorunitario" class="java.math.BigDecimal"/>
+	<field name="produtocompra_prodcompra_nome" class="java.lang.String"/>
+	<field name="produtocompra_prodcompra_valor" class="java.math.BigDecimal"/>
+	<field name="itemcompra_compra_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="101" height="20" uuid="4c8bf9c6-faf5-4bf8-8188-a5ef35154d35"/>
+				<textFieldExpression><![CDATA[$F{itemcompra_item_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="101" y="0" width="198" height="20" uuid="81e8310c-2ba6-4341-95ca-c4f0d648757c"/>
+				<textFieldExpression><![CDATA[$F{produtocompra_prodcompra_nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00">
+				<reportElement x="299" y="0" width="115" height="20" uuid="2ef54f81-1f0b-42aa-84aa-56f996ba4202"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{itemcompra_item_quantidade}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="414" y="0" width="141" height="20" uuid="6ef026d9-27f8-4d88-92bc-d355fc1def7b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{itemcompra_item_valorunitario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

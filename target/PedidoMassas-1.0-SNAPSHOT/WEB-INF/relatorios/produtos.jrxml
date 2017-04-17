@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produtos" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f180063-8987-4f6c-a5c7-2aaa8d033935">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     produto."produto_id" AS produto_produto_id,
+     produto."produto_ativo" AS produto_produto_ativo,
+     produto."produto_dtcadastro" AS produto_produto_dtcadastro,
+     produto."produto_estoque" AS produto_produto_estoque,
+     produto."produto_estoquemin" AS produto_produto_estoquemin,
+     produto."produto_nome" AS produto_produto_nome,
+     produto."produto_valor" AS produto_produto_valor,
+     categoria."categora_nome" AS categoria_categora_nome,
+     categoria."categoria_pai" AS categoria_categoria_pai
+FROM
+     "public"."categoria" categoria INNER JOIN "public"."produto" produto ON categoria."categoria_id" = produto."categoria_id"]]>
+	</queryString>
+	<field name="produto_produto_id" class="java.lang.Long"/>
+	<field name="produto_produto_ativo" class="java.lang.Boolean"/>
+	<field name="produto_produto_dtcadastro" class="java.sql.Timestamp"/>
+	<field name="produto_produto_nome" class="java.lang.String"/>
+	<field name="categoria_categoria_pai" class="java.lang.Long"/>
+	<field name="categoria_categora_nome" class="java.lang.String"/>
+	<field name="produto_produto_estoquemin" class="java.math.BigDecimal"/>
+	<field name="produto_produto_estoque" class="java.math.BigDecimal"/>
+	<field name="produto_produto_valor" class="java.math.BigDecimal"/>
+	<variable name="total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{produto_produto_estoque}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="12" y="0" width="541" height="33" uuid="c58b36b4-814a-4848-a13e-470f87d54190"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Relatório de Produtos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="346" y="46" width="207" height="22" uuid="e67bc0f7-0b35-43a2-ae15-831c21309395"/>
+				<text><![CDATA[Massas Máximo & Zortea]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="822fda91-22da-4582-af8e-a90bd6da28fd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="0" y="21" width="61" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="13b3f3cf-bb76-4e3d-885d-cca3d4e64c60"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="61" y="21" width="111" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="751b3991-097e-483c-8efb-a390e8021f8a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Data de Cadastro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="172" y="21" width="133" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="d28212e8-3687-40bc-86fb-f8fde1131f55"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="305" y="21" width="90" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="80d0033e-a3f2-4364-8724-975c30fd5443"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="395" y="21" width="93" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="909359b0-7f50-45dc-906b-606eb28a92c2"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Estoque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="488" y="21" width="67" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="f51d31f0-24b4-48d4-b3be-56cc583f8248"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="941a3a54-21f0-49cc-a008-7bd890166063"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="1" width="61" height="15" uuid="892dd2f8-d96f-4f01-9759-d446634f4dd2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produto_produto_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="172" y="0" width="133" height="15" uuid="4dea822d-1bcc-421d-bb09-8042acb5c332"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produto_produto_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="305" y="0" width="90" height="15" uuid="1b282d27-4595-44ff-8f06-b4097095216d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{categoria_categora_nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Detail" x="395" y="0" width="93" height="15" uuid="cfa91cdc-69fa-4e04-be2c-c4993a477589"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produto_produto_estoque}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement style="Detail" x="488" y="0" width="67" height="15" uuid="898d1555-c958-4e36-a408-cbed1632bbc7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produto_produto_valor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="Detail" x="61" y="1" width="111" height="15" uuid="251d3d14-6978-41da-afba-7068c2260068"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{produto_produto_dtcadastro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="cd3c15a2-333e-4f03-93d4-796124c6c943"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="0b26063a-f0c9-4ebd-afdc-f1b9020252c7"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="e3d926a2-507a-42c6-8129-eb65f9a968ec"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="22a141ae-9fc6-48b3-8510-d7d9cce4667a"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="371" y="33" width="82" height="20" uuid="9c071078-cbf6-4699-8df4-0fe9e4d049a3"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estoque Total:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="453" y="33" width="100" height="20" uuid="fb694c64-98a2-4c06-b498-d9b38a7a40dd"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

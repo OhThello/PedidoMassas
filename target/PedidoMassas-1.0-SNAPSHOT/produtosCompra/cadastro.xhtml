@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml">
+        <ui:define name="titulo">#{produtoCompraControle.editando ? 'Edição de Produto Compra' : 'Novo Produto Compra'}</ui:define>
+        <ui:define name="corpo">
+
+            <h:form>
+                <h1>#{produtoCompraControle.editando ? 'Edição de Produto Compra' : 'Novo Produto Compra'}</h1>
+
+
+                <p:toolbar style="margin-top: 20px">
+                    <p:toolbarGroup>
+                        <p:button value="Cancelar" outcome="/Home"  icon="ui-icon-close"/>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Salvar"  action="#{produtoCompraControle.salvar()}"
+                                         id="btsalvar" icon="ui-icon-disk" ajax="false"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+                             columnClasses="rotulo, campo">
+
+                    <p:outputLabel value="ID" for="id"/>
+                    <p:inputText id="id" size="20" maxlength="20"  disabled="true"
+                                 value="#{produtoCompraControle.produtoCompra.id}"/>
+
+                    <p:outputLabel for="dtcadastro" value="Data de Cadastro:"/>
+                    <h:outputText id="dtcadastro" value="#{produtoCompraControle.produtoCompra.dataCadastro}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+
+                    <p:outputLabel value="Nome" for="nome"/>
+                    <p:inputText id="nome" size="60" maxlength="80"
+                                 value="#{produtoCompraControle.produtoCompra.nome}"
+                                  required="true" requiredMessage="O campo nome é obrigatório"/>
+
+
+                    <p:outputLabel value="Valor unitário" for="valorUnitario"/>
+                    <p:inputText id="valorUnitario" size="10" maxlength="10"
+                                 value="#{produtoCompraControle.produtoCompra.valorUnitario}"
+                                  required="true" requiredMessage="O campo valor Unitário é obrigatório">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </p:inputText>
+
+                    <p:outputLabel value="Estoque Minimo" for="estoqueMinimo"/>
+                    <p:inputText id="estoqueMinimo" size="10" maxlength="10"
+                                 value="#{produtoCompraControle.produtoCompra.estoqueMinimo}"
+                                  required="true" requiredMessage="O campo estoque minímo é obrigatório">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </p:inputText>
+
+                    <p:outputLabel for="ativo" value="Ativo:"/>
+                    <p:selectBooleanCheckbox id="ativo" value="#{produtoCompraControle.produtoCompra.ativo}"/>
+
+                </p:panelGrid>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+</html>
+

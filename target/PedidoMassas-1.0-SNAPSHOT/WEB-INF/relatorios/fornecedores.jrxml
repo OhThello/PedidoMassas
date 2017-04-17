@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fornecedores" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="af3a02c0-419f-4718-90ae-30bf7eea44b1">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     pes_juridica."pes_cnpj" AS pes_juridica_pes_cnpj,
+     pes_juridica."pes_razaosocial" AS pes_juridica_pes_razaosocial,
+     pes_juridica."pes_id" AS pes_juridica_pes_id,
+     pessoa."pes_nome" AS pessoa_pes_nome,
+     cidade."cidade_nome" AS cidade_cidade_nome,
+     pessoa."pes_telefone" AS pessoa_pes_telefone
+FROM
+     "public"."pessoa" pessoa INNER JOIN "public"."pes_juridica" pes_juridica ON pessoa."pes_id" = pes_juridica."pes_id"
+     INNER JOIN "public"."cidade" cidade ON pessoa."cidade_id" = cidade."cidade_id"]]>
+	</queryString>
+	<field name="pes_juridica_pes_id" class="java.lang.Long"/>
+	<field name="pessoa_pes_nome" class="java.lang.String"/>
+	<field name="pes_juridica_pes_razaosocial" class="java.lang.String"/>
+	<field name="pes_juridica_pes_cnpj" class="java.lang.String"/>
+	<field name="pessoa_pes_telefone" class="java.lang.String"/>
+	<field name="cidade_cidade_nome" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="552" height="33" uuid="5df827f7-2f30-448b-a39b-d703683295f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Relatório de Fornecedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" mode="Opaque" x="346" y="46" width="206" height="22" forecolor="#000000" backcolor="#CCCCCC" uuid="5446f1b5-d6b2-44cf-952d-75aa0276d259"/>
+				<text><![CDATA[Massas Máximo & Zortea]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="d2f18b85-1be1-47ca-afbe-a94da81933be"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="0" y="19" width="44" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="cfabbfe3-347d-4b26-a8a1-81964e699adf"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="44" y="19" width="166" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="375fc40e-fa9b-4735-a016-043ae7f61bb6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Empresa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="210" y="19" width="136" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="b6976b52-a4a6-4163-8b28-371c8845955b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="346" y="19" width="114" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="72af28ee-12ea-49b0-8861-aaf4a0f131d5"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Telefone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="460" y="19" width="92" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="579e0b5f-842b-4c86-90b1-d299d44748d5"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cidade]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="6dffa3ec-9f69-44a3-aaa5-f0469c223743"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="44" height="15" uuid="3d7d07e1-f956-437f-b90e-08b7601aea50"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pes_juridica_pes_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="44" y="0" width="166" height="15" uuid="24bb6634-0f01-4725-9c80-5de93f521052"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pessoa_pes_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="210" y="0" width="136" height="15" uuid="3e522c50-ff6f-4b77-8974-e0932f1deefd"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pes_juridica_pes_cnpj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="346" y="0" width="114" height="15" uuid="53aaaca8-75c9-4f9c-bac2-f47d3b067e8d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pessoa_pes_telefone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="460" y="0" width="92" height="15" uuid="8026c346-8468-4d01-b3d1-d65ac97680fc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cidade_cidade_nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="2197bc6c-29d5-4c27-b1a4-6a3e1be96d94"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="82e6ad02-ea77-4cb7-90b4-44d740981805"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="9b67b252-c495-4f8c-a101-a2cb38e54b36"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="6cbee10e-1c48-4339-849c-f6774b4f65b1"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

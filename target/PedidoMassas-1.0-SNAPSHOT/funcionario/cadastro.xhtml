@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml">
+        <ui:define name="titulo">#{pessoaFuncionarioControle.editando ? 'Edição de Funcionario' : 'Novo Funcionário'}</ui:define>
+        <ui:define name="corpo">
+
+            <h:form>
+                <h1>#{pessoaFuncionarioControle.editando ? 'Edição de Funcionario' : 'Novo Funcionário'}</h1>
+
+                <p:toolbar style="margin-top: 20px">
+                    <p:toolbarGroup>
+                        <p:button value="Cancelar" outcome="/funcionario/pesquisa"  icon="ui-icon-close"/>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup>
+                        <p:button value="Pesquisa" outcome="/funcionario/pesquisa" icon="ui-icon-search"/>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Salvar" action="#{pessoaFuncionarioControle.salvar()}"
+                                         id="btsalvar" icon="ui-icon-disk" ajax="false"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+                <p:panelGrid columns="4" id="painelPessoa" style="width: 100%; margin-top: 20px">
+
+                    <p:outputLabel for="id" value="ID:"/>
+                    <p:inputText id="id"  size="20" maxlength="20" disabled="true"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.id}"/>
+
+                    <p:outputLabel for="dtcadastro" value="Data de Cadastro:"/>
+                    <h:outputText id="dtcadastro" value="#{pessoaFuncionarioControle.pessoaFuncionario.dataCadastro}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+
+                    <p:outputLabel for="nome" value="Nome:"/>
+                    <p:inputText id="nome"  size="80" maxlength="80"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.nome}"
+                                 required="true" requiredMessage="O campo Nome é obrigatório"/>
+
+                    <p:outputLabel for="cpf" value="CPF:" />
+                    <p:inputMask mask="999.999.999-99" id="cpf" 
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.cpf}"
+                                 required="true" requiredMessage="O campo CPF é obrigatório"/>
+
+                    <p:outputLabel for="rg" value="RG:"/>
+                    <p:inputMask mask="9.999.999 9" id="rg"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.rg}"
+                                 required="true" requiredMessage="O campo RG é obrigatório"/>
+
+                    <p:outputLabel for="dtNascimento" value="Data de nascimento:" />
+                    <p:calendar id="dtNascimento" value="#{pessoaFuncionarioControle.pessoaFuncionario.nascimento}"
+                                required="true" requiredMessage="O campo Data de nascimento é obrigatório"
+                                pattern="dd/MM/yyyy"/>
+
+                    <p:outputLabel for="sexo" value="Sexo:" />
+                    <p:selectOneRadio id="sexo" value="#{pessoaFuncionarioControle.pessoaFuncionario.sexo}">
+
+                        <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                        <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+
+                    </p:selectOneRadio>
+
+                    <p:outputLabel for="email" value="E-mail:" />
+                    <p:inputText id="email" value="#{pessoaFuncionarioControle.pessoaFuncionario.email}" />
+
+                    <p:outputLabel for="fone" value="Telefone:" />
+                    <p:inputMask mask="(99) 9999-9999?9" id="fone" 
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.telefone}"/>
+
+
+                    <p:outputLabel for="celular" value="Celular:" />
+                    <p:inputMask mask="(99) 9999-9999?9" id="celular"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.celular}"/>
+
+                    <p:outputLabel value="Logradouro:" for="logradouro"/>
+                    <p:inputText id="logradouro" size="80" maxlength="20"
+                                 required="true" requiredMessage="O campo Logradouro é obrigatório"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.logradouro}"/>
+
+                    <p:outputLabel value="Número:" for="numero"/>
+                    <p:inputText id="numero" size="20" maxlength="20"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.numero}"/>
+
+                    <p:outputLabel value="Complemento:" for="complemento"/>
+                    <p:inputText id="complemento" size="80" maxlength="20"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.complemento}"/>
+
+                    <p:outputLabel value="Bairro:" for="bairro"/>
+                    <p:inputText id="bairro" size="40" maxlength="20"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.bairro}"/>
+
+                    <p:outputLabel value="Referência:" for="referencia"/>
+                    <p:inputText id="referencia" size="80" maxlength="20"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.referencia}"/>
+
+                    <p:outputLabel value="CEP:" for="cep"/>
+                    <p:inputMask mask="99999 - 999" id="cep" size="20" maxlength="20"
+                                 value="#{pessoaFuncionarioControle.pessoaFuncionario.cep}"/>
+
+
+                     <p:outputLabel for="cidade" value="Cidade:"/>
+                    <p:autoComplete id="cidade" 
+                                    value="#{pessoaFuncionarioControle.pessoaFuncionario.cidade}"
+                                    completeMethod="#{cidadeControle.autoComplete}"
+                                    var="cid"
+                                    itemLabel="#{cid.nome}"
+                                    itemValue="#{cid}"
+                                    converter="#{cidadeControle.converter()}"
+                                    queryDelay="500"
+                                    dropdown="true"
+                                     required="true" requiredMessage="O campo nome da Cidade é obrigatório"/>
+
+                     <p:outputLabel for="ocupacao" value="Ocupação:"/>
+                    <p:autoComplete id="ocupacao" 
+                                    value="#{pessoaFuncionarioControle.pessoaFuncionario.ocupacao}"
+                                    completeMethod="#{ocupacaoControle.autoComplete}"
+                                    var="ocu"
+                                    itemLabel="#{ocu.nome}"
+                                    itemValue="#{ocu}"
+                                    converter="#{ocupacaoControle.converter()}"
+                                    queryDelay="500"
+                                    dropdown="true"
+                                     required="true" requiredMessage="O campo Ocupação é obrigatório"/>
+
+
+                    <p:outputLabel for="dtadmissao" value="Data de Admissão:" />
+                    <p:calendar id="dtadmissao" value="#{pessoaFuncionarioControle.pessoaFuncionario.dataAdmissao}"
+                                required="true" requiredMessage="O campo Data de Admissão é obrigatório"
+                                pattern="dd/MM/yyyy"/>
+
+
+
+                    <p:outputLabel for="dtDemissao" value="Data de Demissao:" />
+                    <p:calendar id="dtDemissao" value="#{pessoaFuncionarioControle.pessoaFuncionario.dataDemissao}"
+                                pattern="dd/MM/yyyy"/>
+                </p:panelGrid>
+
+
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="titulo">Sistema de Pedidos de Venda</ui:insert></title>
+        <h:outputStylesheet library="css" name="sistema.css" />
+    </h:head>
+
+    <h:body>
+
+        <!--MENSAGEM DE EXCLUSÃO GENÉRICA--> 
+        <h:form>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </h:form>
+
+        <!--FIM DA EXCLUSÃO-->
+
+        <p:ajaxStatus styleClass="ajax-status">
+            <f:facet name="start">
+                <h:graphicImage library="images" name="loading.gif"/>
+            </f:facet>
+        </p:ajaxStatus>
+
+        <header>
+            <div style="float: left">
+                <h:link outcome="/Home">
+                    <h:graphicImage library="images" name="logo.png" />
+                </h:link>
+            </div>
+
+
+            <p:growl id="growl"/>  
+
+            <div style="float: right; margin-right: 110px">
+                
+
+                <h:form style="display: inline-block">
+                    <p:menubar styleClass="menu-sistema">
+                        <p:submenu label="Cadastros">
+                            <p:menuitem value="Clientes" outcome="/cliente/pesquisa"/>
+                            <p:menuitem value="Usuários" outcome="/usuario/pesquisa"/>
+                            <p:separator/>
+                            <p:menuitem value="Categorias" outcome="/categoria/pesquisa"/>
+                            <p:menuitem value="Produtos" outcome="/produto/pesquisa"/>
+                            <p:menuitem value="Produtos de Compra" outcome="/produtosCompra/pesquisa"/>
+                            <p:separator/>
+                            <p:menuitem value="Cidade" outcome="/cidade/pesquisa" />
+                            <p:menuitem value="Estado" outcome="/estado/pesquisa" />
+                            <p:separator/>
+                            <p:menuitem value="Funcionário" outcome="/funcionario/pesquisa" />
+                            <p:menuitem value="Ocupação" outcome="/ocupacao/pesquisa" />
+                        </p:submenu>
+                        <p:submenu label="Movimento">
+                            <p:menuitem value="Novo Pedido" outcome="/pedido/cadastroPedido"  />
+                            <p:menuitem value="Pesquisa Pedido" outcome="/pedido/pesquisaPedido"/>
+                            <p:menuitem value="Nova Compra" outcome="/compra/cadastroCompra"  />
+                            <p:menuitem value="Pesquisa Compra" outcome="/compra/pesquisaCompra" />
+                        </p:submenu>
+                        <p:submenu label="Financeiro">
+                            <p:menuitem value="Contas à Receber" outcome="/contasReceber/pesquisa"/>
+                            <p:menuitem value="Contas à Pagar" outcome="/contasPagar/pesquisa"/>
+                        </p:submenu>
+                        <p:submenu label="Relatórios Cadastrais">
+                            <p:menuitem value="Cidade/Estado" action="#{relatorioControle.gerarRelatorio('cidade_estados')}" 
+                                        ajax="false" target="_blank"/>
+                            <p:menuitem value="Produtos"  action="#{relatorioControle.gerarRelatorio('produtos')}" 
+                                        ajax="false" target="_blank"/>
+                            <p:menuitem value="Fornecedores" action="#{relatorioControle.gerarRelatorio('fornecedores')}" 
+                                        ajax="false" target="_blank"/>
+                            <p:menuitem value="Categoria/SubCategoria" action="#{relatorioControle.gerarRelatorio('categoria')}" 
+                                        ajax="false" target="_blank"/>
+                            <p:menuitem value="Compras"  action="#{relatorioControle.gerarRelatorio('compra')}" 
+                                        ajax="false" target="_blank" />
+                            <p:menuitem value="Vendas" action="#{relatorioControle.gerarRelatorio('venda')}" 
+                                        ajax="false" target="_blank" />
+                            <p:menuitem value="Clientes" action="#{relatorioControle.gerarRelatorio('clientes')}" 
+                                        ajax="false" target="_blank"/>
+                            <p:menuitem value="Usuários" action="#{relatorioControle.gerarRelatorio('usuario')}" 
+                                        ajax="false" target="_blank" />
+                        </p:submenu>
+                        <p:submenu label="Relatórios Gerencial">
+                            <p:menuitem value="Produtos mais Vendidos" outcome="/relatorioGerencial/produtoMaisVendido" target="_blank"/>
+                            <p:menuitem value="Contas a Pagar" outcome="/relatorioGerencial/relatorioContasPagar" target="_blank"/>
+                            <p:menuitem value="Contas a Receber" outcome="/relatorioGerencial/relatorioContasReceber" target="_blank"/>
+                            <p:menuitem value="Vendas por Período" outcome="/relatorioGerencial/vendasPeriodo" target="_blank"/>
+                        </p:submenu>
+
+                        <p:menuitem value="Sair" url="/j_spring_security_logout"/>
+                        
+                    </p:menubar>
+                </h:form>
+            </div>
+
+
+            <!--<div style="clear: both"></div>-->
+        </header>
+
+        <div id="conteudo">
+            <ui:insert name="corpo"/>
+        </div>
+        <p:separator style="margin-top: 20px"/>
+
+        <div  align="right">
+            <footer>
+                M e Z -- Sistema de Gerenciamento para Produção de Massas
+            </footer>
+        </div>
+
+
+    </h:body>
+
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="itemproduto" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="162e7267-7271-4951-8775-ca2057c8a9d8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idPedido" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     itempedido."item_quantidade" AS itempedido_item_quantidade,
+     itempedido."item_id" AS itempedido_item_id,
+     produto."produto_nome" AS produto_produto_nome,
+     itempedido."pedido_id" AS itempedido_pedido_id
+FROM
+     "public"."produto" produto INNER JOIN "public"."itempedido" itempedido ON produto."produto_id" = itempedido."prod_id"
+where
+ itempedido."pedido_id" = $P{idPedido}]]>
+	</queryString>
+	<field name="itempedido_item_quantidade" class="java.math.BigDecimal"/>
+	<field name="itempedido_item_id" class="java.lang.Long"/>
+	<field name="produto_produto_nome" class="java.lang.String"/>
+	<field name="itempedido_pedido_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="150" height="20" uuid="32932c03-50d9-41fb-bb5b-f8ce9eea367c"/>
+				<textFieldExpression><![CDATA[$F{itempedido_item_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="228" height="20" uuid="6aea6e43-1389-4ebd-b5c6-ff649e4beee3"/>
+				<textFieldExpression><![CDATA[$F{produto_produto_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="0" width="177" height="20" uuid="faeed448-92d5-45fc-b4c2-709b2ec8ddc0"/>
+				<textFieldExpression><![CDATA[$F{itempedido_item_quantidade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

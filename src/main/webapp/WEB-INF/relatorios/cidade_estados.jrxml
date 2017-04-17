@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cidade_estados" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d814dbaf-dcc0-47e4-a2e5-0077160cfcca">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     cidade."cidade_nome" AS cidade_cidade_nome,
+     estado."estado_nome" AS estado_estado_nome,
+     estado."estado_pais" AS estado_estado_pais,
+     estado."estado_sigla" AS estado_estado_sigla
+FROM
+     "public"."estado" estado INNER JOIN "public"."cidade" cidade ON estado."estado_id" = cidade."estado_id"]]>
+	</queryString>
+	<field name="cidade_cidade_nome" class="java.lang.String"/>
+	<field name="estado_estado_nome" class="java.lang.String"/>
+	<field name="estado_estado_sigla" class="java.lang.String"/>
+	<field name="estado_estado_pais" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="16" y="0" width="539" height="33" uuid="b6144b69-e5bc-4765-87d7-f98bb194c390"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Relatório Cidade - Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="359" y="46" width="194" height="22" uuid="016771fc-b8a4-4071-80e9-093010e0a92a"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Massas Máximo & Zortea]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" backcolor="#FF0066" uuid="89687281-ecf1-4aa8-87b1-57c3bd7e526c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="0" y="19" width="138" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="47ca1a47-7594-4c5e-a23f-3f865ec11a8f"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Cidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="138" y="19" width="138" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="326e2a39-c3db-42a0-ad55-324074d648de"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="276" y="19" width="138" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="8b363a17-e701-47d9-b7fd-295f1bad640c"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Sigla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="414" y="19" width="138" height="15" forecolor="#000000" backcolor="#CCCCCC" uuid="195ea3b1-5ae2-4221-82d2-79cc53a04557"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[País]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="b11c01cd-a917-4a16-afb7-002da6ffe000"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="138" height="15" uuid="ad4969db-fad4-4868-9cab-55f2fff96497"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cidade_cidade_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="138" y="0" width="138" height="15" uuid="d275aee6-ab88-4cf6-9771-2f8dce00af26"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estado_estado_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="276" y="0" width="138" height="15" uuid="b34d238f-8667-442c-8b48-1720ac1193d4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estado_estado_sigla}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="414" y="0" width="138" height="15" uuid="95424908-1b6c-44ca-beb4-5765b3abbb8b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estado_estado_pais}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="e8b86d4e-cc20-4b09-bc65-8e8a3dafc7de"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="00e95e74-1d4e-4521-a1dd-fda0bc2174fc"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="2c5f30ef-d641-4847-804f-4f79d806615e"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="dd9ab5bf-7476-4c14-b75c-91c4d719eb0c"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

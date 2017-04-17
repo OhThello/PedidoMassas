@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relContasPagars" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="98f16972-8598-4dad-bc00-c9445ed85f93">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="dataInicio" class="java.util.Date"/>
+	<parameter name="dataFim" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+     contaspagar."pagar_id" AS contaspagar_pagar_id,
+     contaspagar."pagar_datalancamento" AS contaspagar_pagar_datalancamento,
+     contaspagar."pagar_datapagamento" AS contaspagar_pagar_datapagamento,
+     contaspagar."pagar_datavencimento" AS contaspagar_pagar_datavencimento,
+     contaspagar."pagar_valor" AS contaspagar_pagar_valor,
+     compra."compra_id" AS compra_compra_id,
+     pessoa."pes_id" AS pessoa_pes_id,
+     pessoa."pes_nome" AS pessoa_pes_nome,
+     compra."pes_id" AS compra_pes_id,
+     contaspagar."pagar_valorpagamento" AS contaspagar_pagar_valorpagamento,
+     contaspagar."pedido_id" AS contaspagar_pedido_id
+FROM
+     "public"."compra" compra INNER JOIN "public"."contaspagar" contaspagar ON compra."compra_id" = contaspagar."pedido_id"
+     INNER JOIN "public"."pessoa" pessoa ON compra."pes_id" = pessoa."pes_id"
+where
+(contaspagar."pagar_valor" -  contaspagar."pagar_valorpagamento") > 0 and
+cast(contaspagar."pagar_datavencimento" as Date) between $P{dataInicio} and $P{dataFim}
+order by
+contaspagar."pagar_datavencimento"]]>
+	</queryString>
+	<field name="contaspagar_pagar_id" class="java.lang.Long"/>
+	<field name="contaspagar_pagar_datalancamento" class="java.sql.Date"/>
+	<field name="contaspagar_pagar_datapagamento" class="java.sql.Date"/>
+	<field name="contaspagar_pagar_datavencimento" class="java.sql.Date"/>
+	<field name="contaspagar_pagar_valor" class="java.math.BigDecimal"/>
+	<field name="compra_compra_id" class="java.lang.Long"/>
+	<field name="pessoa_pes_id" class="java.lang.Long"/>
+	<field name="pessoa_pes_nome" class="java.lang.String"/>
+	<field name="compra_pes_id" class="java.lang.Long"/>
+	<field name="contaspagar_pagar_valorpagamento" class="java.math.BigDecimal"/>
+	<field name="contaspagar_pedido_id" class="java.lang.Long"/>
+	<variable name="soma" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{contaspagar_pagar_valor}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="2" y="0" width="553" height="33" uuid="6259774f-44a3-46ea-b4f6-4b4dc4e14e1b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Relatório Contas a Pagar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="338" y="48" width="215" height="22" uuid="7b8c621c-4c9f-424c-b5ce-b88bfef0f64d"/>
+				<text><![CDATA[Massas Máximo & Zortea]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="dff53263-27d6-494d-8b4e-1ed97c213340"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="0" y="19" width="185" height="17" forecolor="#000000" backcolor="#CCCCCC" uuid="846eb487-ed4c-459c-9d13-327c427e9686"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="351" y="19" width="100" height="17" forecolor="#000000" backcolor="#CCCCCC" uuid="d4275c2f-6066-42c4-a331-f07370be6fd7"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" mode="Opaque" x="451" y="19" width="104" height="17" forecolor="#000000" backcolor="#CCCCCC" uuid="48363a40-e0a7-4f4c-9d2f-593ddf300904"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="185" y="19" width="166" height="17" forecolor="#000000" backcolor="#CCCCCC" uuid="61233f08-37f6-457b-9959-e5f1dc0ecf82"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fornecedor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="fa790d55-e5f4-4e38-8926-e2bb46688df6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="185" height="15" uuid="2e913f71-12eb-41e2-b8c7-0d16f16cd507"/>
+				<textFieldExpression><![CDATA[$F{contaspagar_pagar_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="2" width="166" height="14" uuid="59c1b0e2-2b67-46d7-ac89-245ffe22aa97"/>
+				<textFieldExpression><![CDATA[$F{pessoa_pes_nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="351" y="0" width="100" height="14" uuid="4d9631fa-eff8-4536-9385-0edfcdba6568"/>
+				<textFieldExpression><![CDATA[$F{contaspagar_pagar_datavencimento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement style="Detail" x="451" y="1" width="100" height="15" uuid="b86fb02e-cb59-4ee6-b690-125716af441f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{contaspagar_pagar_valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="4f859f6a-747c-4552-9ecd-90996dfab879"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="7c47df6e-62a6-4978-b554-b416dab66457"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="c576a427-0acb-480e-92f5-0080f807b11e"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="468d1ecd-eca0-4148-a152-d5528f347324"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="77" splitType="Stretch">
+			<staticText>
+				<reportElement x="285" y="27" width="166" height="20" forecolor="#000000" uuid="3846c450-fa17-44c4-b297-8917eca5b49d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total das Contas a Pagar:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="451" y="27" width="100" height="20" uuid="508b7e1c-0c06-4967-bc9b-0df91c47909d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{soma}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="354" y="47" width="53" height="20" uuid="71262252-8421-42d0-9d96-79d7decfce4f"/>
+				<textElement>
+					<font fontName="Candara" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período de ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="469" y="47" width="20" height="20" uuid="3f4b1353-c255-4151-927b-9249c8775380"/>
+				<textElement textAlignment="Center">
+					<font fontName="Candara" isBold="true"/>
+				</textElement>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="407" y="47" width="62" height="20" uuid="29fe94dc-d5e4-434d-9bf1-c3ff1bd8fc73"/>
+				<textElement textAlignment="Center">
+					<font fontName="Candara" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataInicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="489" y="47" width="61" height="20" uuid="5b057523-d691-45d8-8496-e7856a956186"/>
+				<textElement textAlignment="Center">
+					<font fontName="Candara" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataFim}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

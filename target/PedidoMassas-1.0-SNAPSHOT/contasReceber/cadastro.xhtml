@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml">
+
+        <ui:define name="titulo">Recebimengo de Contas</ui:define>
+
+        <ui:define name="corpo">
+            <h:form id="frm">
+                <h1>Recebimento de Contas</h1>
+                <p:growl autoUpdate="true"/>
+                
+                  <p:toolbar style="margin-top: 20px">
+                    <p:toolbarGroup>
+                        <p:button value="Cancelar" outcome="/Home.xtml"  icon="ui-icon-close"/>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Salvar"  action="#{contasReceberControle.salvar()}"
+                                         id="btsalvar" icon="ui-icon-disk" ajax="false"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                    <p:panelGrid columns="2" id="painelContas" style="width: 100%; margin-top: 20px">
+                        <p:outputLabel for="id" value="ID:"/>
+                        <p:inputText id="id" value="#{contasReceberControle.contasReceber.id}" disabled="true"/>
+
+                        <p:outputLabel for="nome" value="Nome:"/>
+                        <p:inputText id="nome" value="#{contasReceberControle.contasReceber.pedido.pessoa.nome}"
+                           disabled="true" />
+
+                        <p:outputLabel for="valor" value="Valor:"/>
+                        <p:inputText id="valor" value="#{contasReceberControle.contasReceber.valor}" disabled="true">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="dataVenc" value="Vencimento:"/>
+                        <p:calendar id="dataVenc" value="#{contasReceberControle.contasReceber.dataVencimento}"
+                                    pattern="dd/MM/yyyy"
+                                    disabled="true"/>
+                        
+                        <p:outputLabel for="dataPago" value="Pago em: "/>
+                        <p:calendar id="dataPago" value="#{contasReceberControle.contasReceber.dataPagamento}"
+                                    pattern="dd/MM/yyyy" required="true" requiredMessage="O campo pago em é obrigatório"
+                                    />
+                        
+                         <p:outputLabel for="pagamento" value="Valor:"/>
+                         <p:inputText id="pagamento" value="#{contasReceberControle.contasReceber.valorPagamento}"
+                                      required="true" requiredMessage="O campo Valor é obrigatório">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="situacao" value="PAGO"/>
+                        <p:selectBooleanCheckbox id="situacao" value="#{contasReceberControle.contasReceber.ativo}" />
+                        
+
+
+                    </p:panelGrid>
+
+                  
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>
